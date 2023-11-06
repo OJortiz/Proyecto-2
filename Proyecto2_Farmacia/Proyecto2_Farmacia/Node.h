@@ -1,6 +1,6 @@
 #pragma once
 
-template<typename T>
+generic <typename T>
 ref class Node
 {
 public:

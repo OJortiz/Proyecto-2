@@ -1,19 +1,29 @@
 #pragma once
 #include "Node.h"
 
-template <typename T>
-ref class ListaDE
+generic <typename T>
+public ref class ListaDE
 {
-	Node<T>^ head;
-
 public:
+    ListaDE();
+    ~ListaDE();
 
-	int count;
+    void Add(T value);
+    bool Remove(T value);
+    void Clear();
 
-	ListaDE() {
-		count = 0;
-		head = nullptr;
-	}
+    property int Count {
+        int get();
+    }
+
+    T GetAt(int index);
+    T GetFirst();
+    T GetLast();
+
+private:
+    Node<T>^ head;
+    Node<T>^ tail;
+    int count;
 
 };
 
