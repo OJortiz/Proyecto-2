@@ -1,0 +1,2 @@
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\x64\Debug\Proyecto2_Farmacia.vcxproj.AssemblyReference.cache
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\x64\Debug\Proyecto2_Farmacia.vcxproj.SuggestedBindingRedirects.cache
