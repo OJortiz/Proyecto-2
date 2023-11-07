@@ -1,6 +1,6 @@
-﻿  Medicamento.cpp
+﻿  Inventario.cpp
+  Medicamento.cpp
   Proveedor.cpp
-  Proyecto2_Farmacia.cpp
   Generando código...
   AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
   Proyecto2_Farmacia.vcxproj -> C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\x64\Debug\Proyecto2_Farmacia.exe

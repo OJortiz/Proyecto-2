@@ -127,6 +127,7 @@
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inventario.h" />
     <ClInclude Include="ListaDE.h" />
     <ClInclude Include="Medicamento.h" />
     <ClInclude Include="Node.h" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="Inventario.cpp" />
     <ClCompile Include="ListaDE.cpp" />
     <ClCompile Include="Medicamento.cpp" />
     <ClCompile Include="Node.cpp" />
