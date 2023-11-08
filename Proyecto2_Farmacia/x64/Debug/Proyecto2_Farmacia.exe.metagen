@@ -9,6 +9,27 @@ Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e0
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
+Class Inventario`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Type parameter: T
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Int32, System.DateTime, Proveedor`1[T], Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Double PrecioVenta 'get set' : 
+    Double PrecioCompra 'get set' : 
+    Proveedor`1[T] ProveedorAsociado 'get set' : 
+    System.DateTime FechaCaducidad 'get set' : 
+    Int32 CantidadStock 'get set' : 
+  Methods:
+    get_CantidadStock(): PrivateScope, Public, HideBySig, SpecialName
+    set_CantidadStock(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_FechaCaducidad(): PrivateScope, Public, HideBySig, SpecialName
+    set_FechaCaducidad(DateTime): PrivateScope, Public, HideBySig, SpecialName
+    get_ProveedorAsociado(): PrivateScope, Public, HideBySig, SpecialName
+    set_ProveedorAsociado(Proveedor`1): PrivateScope, Public, HideBySig, SpecialName
+    get_PrecioCompra(): PrivateScope, Public, HideBySig, SpecialName
+    set_PrecioCompra(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_PrecioVenta(): PrivateScope, Public, HideBySig, SpecialName
+    set_PrecioVenta(Double): PrivateScope, Public, HideBySig, SpecialName
 Class ListaDE`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   Type parameter: T
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

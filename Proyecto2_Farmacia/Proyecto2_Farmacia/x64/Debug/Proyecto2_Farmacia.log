@@ -1,3 +1,5 @@
 ﻿  Proyecto2_Farmacia.cpp
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(14,14): warning C4677: 'ProveedorAsociado': la signatura de un miembro no privado contiene un tipo privado de ensamblado de 'Proveedor<T>'
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(19,15): warning C4677: 'Inventario<`generic-class-parameter-1'>': la signatura de un miembro no privado contiene un tipo privado de ensamblado de 'Proveedor<T>'
   AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
   Proyecto2_Farmacia.vcxproj -> C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\x64\Debug\Proyecto2_Farmacia.exe

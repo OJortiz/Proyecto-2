@@ -1,44 +1,14 @@
 #include "pch.h"
 #include "ListaDE.h"
 #include "Medicamento.h"
+#include "Inventario.h"
+#include "Proveedor.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
 
 int main(array<System::String ^> ^args)
 {
-    ListaDE<Medicamento<String^>^>^ listaMedicamentos = gcnew ListaDE<Medicamento<String^>^>();
-
-    // Crear medicamentos y agregarlos a la lista
-    List<String^>^ principiosActivos1 = gcnew List<String^>();
-    principiosActivos1->Add("Paracetamol");
-    principiosActivos1->Add("Ibuprofeno");
-    Medicamento<String^>^ medicamento1 = gcnew Medicamento<String^>("Medicamento1", "12345", "Venta libre", principiosActivos1, "2 tabletas cada 6 horas");
-
-    List<String^>^ principiosActivos2 = gcnew List<String^>();
-    principiosActivos2->Add("Aspirina");
-    principiosActivos2->Add("Cafeína");
-    Medicamento<String^>^ medicamento2 = gcnew Medicamento<String^>("Medicamento2", "67890", "Venta con receta", principiosActivos2, "1 tableta cada 8 horas");
-
-    listaMedicamentos->Add(medicamento1);
-    listaMedicamentos->Add(medicamento2);
-
-    // Mostrar información de los medicamentos en la lista
-    Console::WriteLine("Medicamentos en la lista:");
-    for (int i = 0; i < listaMedicamentos->Count; i++) {
-        Medicamento<String^>^ medicamento = listaMedicamentos->GetAt(i);
-        Console::WriteLine("Nombre: " + medicamento->Nombre);
-        Console::WriteLine("Número de Registro: " + medicamento->NumRegistro);
-        Console::WriteLine("Categoría: " + medicamento->Categoria);
-        Console::WriteLine("Principios Activos:");
-
-        for each (String ^ principioActivo in medicamento->PrincipiosA) {
-            Console::WriteLine("   - " + principioActivo);
-        }
-
-        Console::WriteLine("Dosis Recomendada: " + medicamento->Dosis);
-        Console::WriteLine();
-    }
 
     int opcion;
     bool salir = false;
@@ -62,28 +32,75 @@ int main(array<System::String ^> ^args)
         switch (opcion)
         {
         case 1:
-            Console::WriteLine("aaaaaaaa");
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-        case 8:
-            break;
-        case 9:
-            Console::WriteLine("Ha salido del programa");
-            salir = true;
-            break;
-        default:
-            break;
+
+            ListaDE<Medicamento<String^>^>^ listaMedicamentos = gcnew ListaDE<Medicamento<String^>^>();
+            ListaDE<Inventario<String^>^>^ inventario = gcnew ListaDE<Inventario<String^>^>();
+
+            // Solicitar al usuario que ingrese los datos del medicamento
+            Console::WriteLine("Ingrese los datos del medicamento:");
+            Console::Write("Nombre: ");
+            String^ nombre = Console::ReadLine();
+            Console::Write("Número de Registro: ");
+            String^ numRegistro = Console::ReadLine();
+            Console::Write("Categoría: ");
+            String^ categoria = Console::ReadLine();
+
+            List<String^>^ principiosActivos = gcnew List<String^>();
+            Console::Write("Principios Activos (separados por comas): ");
+            String^ principiosActivosInput = Console::ReadLine();
+            array<String^>^ principios = principiosActivosInput->Split(',');
+            principiosActivos->AddRange(principios);
+
+            Console::Write("Dosis Recomendada: ");
+            String^ dosisRecomendada = Console::ReadLine();
+
+            Medicamento<String^>^ nuevoMedicamento = gcnew Medicamento<String^>(nombre, numRegistro, categoria, principiosActivos, dosisRecomendada);
+            listaMedicamentos->Add(nuevoMedicamento);
+
+            // Solicitar al usuario que ingrese los datos del inventario
+            Console::WriteLine("\nIngrese los datos del inventario del medicamento:");
+            Console::Write("Cantidad en Stock: ");
+            int cantidadStock = Convert::ToInt32(Console::ReadLine());
+            Console::Write("Fecha de Caducidad (yyyy-MM-dd): ");
+            DateTime fechaCaducidad = DateTime::ParseExact(Console::ReadLine(), "yyyy-MM-dd", nullptr);
+            Console::Write("Precio de Compra: ");
+            double precioCompra = Convert::ToDouble(Console::ReadLine());
+            Console::Write("Precio de Venta: ");
+            double precioVenta = Convert::ToDouble(Console::ReadLine());
+
+            Console::Write("Proveedor: ");
+            String^ nombreProveedor = Console::ReadLine();
+            Console::Write("Número de Teléfono del Proveedor: ");
+            String^ telefonoProveedor = Console::ReadLine();
+            Console::Write("Dirección de Contacto del Proveedor: ");
+            String^ direccionProveedor = Console::ReadLine();
+
+            Proveedor<String^>^ proveedor = gcnew Proveedor<String^>(nombreProveedor, "ProveedorID", direccionProveedor, direccionProveedor, telefonoProveedor, "proveedor@example.com");
+            Inventario<String^>^ nuevoInventario = gcnew Inventario<String^>(cantidadStock, fechaCaducidad, proveedor, precioCompra, precioVenta);
+            inventario->Add(nuevoInventario);
+
+            // Mostrar la información del medicamento y su inventario
+            Console::WriteLine("\nInformación del Medicamento registrado:");
+            Console::WriteLine("Nombre: " + nuevoMedicamento->Nombre);
+            Console::WriteLine("Número de Registro: " + nuevoMedicamento->NumRegistro);
+            Console::WriteLine("Categoría: " + nuevoMedicamento->Categoria);
+            Console::WriteLine("Principios Activos:");
+
+            for each (String ^ principioActivo in nuevoMedicamento->PrincipiosA) {
+                Console::WriteLine("   - " + principioActivo);
+            }
+
+            Console::WriteLine("Dosis Recomendada: " + nuevoMedicamento->Dosis);
+            Console::WriteLine();
+
+            Console::WriteLine("Información del Inventario del Medicamento:");
+            Console::WriteLine("Cantidad en Stock: " + nuevoInventario->CantidadStock);
+            Console::WriteLine("Fecha de Caducidad: " + nuevoInventario->FechaCaducidad.ToString("yyyy-MM-dd"));
+            Console::WriteLine("Proveedor: " + nuevoInventario->ProveedorAsociado->Nombre);
+            Console::WriteLine("Precio de Compra: " + nuevoInventario->PrecioCompra);
+            Console::WriteLine("Precio de Venta: " + nuevoInventario->PrecioVenta);
+
+
         }
 
 

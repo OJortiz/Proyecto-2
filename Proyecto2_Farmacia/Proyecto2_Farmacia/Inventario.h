@@ -1,19 +1,20 @@
 #pragma once
 #include "Medicamento.h"
+#include "Proveedor.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
 
 generic <typename T>
-ref class Inventario
+public ref class Inventario
 {
-    int CantidadStock;
-    DateTime FechaCaducidad;
-    Medicamento<T>^ Proveedor;
-    double PrecioCompra;
-    double PrecioVenta;
+public:
+    property int CantidadStock;
+    property DateTime FechaCaducidad;
+    property Proveedor<T>^ ProveedorAsociado;
+    property double PrecioCompra;
+    property double PrecioVenta;
 
     Inventario();
-    Inventario(int cantidadStock, DateTime fechaCaducidad, Medicamento<T>^ proveedor, double precioCompra, double precioVenta);
+    Inventario(int cantidadStock, DateTime fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta);
 };
-
