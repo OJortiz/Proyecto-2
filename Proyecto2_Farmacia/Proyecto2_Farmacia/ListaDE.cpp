@@ -84,6 +84,7 @@ int ListaDE<T>::Count::get()
 {
     return count;
 }
+
 generic <typename T>
 T ListaDE<T>::GetAt(int index)
 {
@@ -109,10 +110,35 @@ T ListaDE<T>::GetFirst()
 }
 
 generic <typename T>
+Node<T>^ ListaDE<T>::GetFirstNode()
+{
+    if (head != nullptr)
+        return head;
+
+    return nullptr;
+}
+
+
+generic <typename T>
 T ListaDE<T>::GetLast()
 {
     if (tail != nullptr)
         return tail->value;
 
     throw gcnew InvalidOperationException("The list is empty.");
+}
+
+generic <typename T>
+ListaDE<T>^ ListaDE<T>::ObtenerLista()
+{
+    ListaDE<T>^ lista = gcnew ListaDE<T>();
+    Node<T>^ current = head;
+
+    while (current != nullptr)
+    {
+        lista->Add(current->value);
+        current = current->next;
+    }
+
+    return lista;
 }

@@ -45,4 +45,6 @@ Class ListaDE`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     GetAt(Int32): PrivateScope, Public, HideBySig
     GetFirst(): PrivateScope, Public, HideBySig
     GetLast(): PrivateScope, Public, HideBySig
+    GetFirstNode(): PrivateScope, Public, HideBySig
+    ObtenerLista(): PrivateScope, Public, HideBySig
     Dispose(): PrivateScope, Public, Final, Virtual, HideBySig

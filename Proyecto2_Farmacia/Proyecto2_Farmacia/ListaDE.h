@@ -19,6 +19,8 @@ public:
     T GetAt(int index);
     T GetFirst();
     T GetLast();
+    Node<T>^ GetFirstNode();
+    ListaDE<T>^ ObtenerLista();
 
 private:
     Node<T>^ head;
