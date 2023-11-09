@@ -129,6 +129,19 @@ T ListaDE<T>::GetLast()
 }
 
 generic <typename T>
+T ListaDE<T>::GetSumaRecorrer() {
+    Node<T>^ current = head; 
+    T valor;
+    while (current != nullptr && current !=tail)
+    {
+        valor = current->value;
+        current = current->next;
+
+    }
+    return valor;
+
+}
+generic <typename T>
 ListaDE<T>^ ListaDE<T>::ObtenerLista()
 {
     ListaDE<T>^ lista = gcnew ListaDE<T>();

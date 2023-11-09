@@ -36,7 +36,7 @@ void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inve
     Console::Write("Cantidad en Stock: ");
     int cantidadStock = Convert::ToInt32(Console::ReadLine());
     Console::Write("Fecha de Caducidad (yyyy-MM-dd): ");
-    DateTime fechaCaducidad = DateTime::ParseExact(Console::ReadLine(), "yyyy-MM-dd", nullptr);
+    int fechaCaducidad = Convert::ToInt32(Console::ReadLine());
     Console::Write("Precio de Compra: ");
     double precioCompra = Convert::ToDouble(Console::ReadLine());
     Console::Write("Precio de Venta: ");
@@ -115,6 +115,34 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         Console::WriteLine("El medicamento no se encontró en la lista.");
     }
 }
+void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
+    List<Inventario<String^>^>^ InventarioCurrent = gcnew List<Inventario<String^>^>();
+    int cantidad = inventario->Count;
+    Node<Inventario<String^>^>^ current = inventario->GetFirstNode();
+    int SumaValores = 0;
+    int ValorPromedioVenta;
+    while (current != nullptr) {
+        InventarioCurrent->Add(current->value);
+        current = current->next;
+    }
+    if (InventarioCurrent->Count > 0) {
+        for each (Inventario<String^> ^ precioventa in InventarioCurrent) {
+            SumaValores = SumaValores + precioventa->PrecioVenta;
+        }
+
+        if (cantidad > 0) {
+            ValorPromedioVenta = SumaValores / cantidad;
+            Console::WriteLine("EL valor promedio de las medicinas ofrecidas es de: " + ValorPromedioVenta + "");
+        }
+    }
+    else
+    {
+        Console::WriteLine("Aun no hay valores ingresados :D");
+    }
+    return;
+
+    }
+
 
 void ConsultarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
 {
@@ -206,6 +234,10 @@ int main(array<System::String ^> ^args)
             break;
 
         case 4:
+            break;
+
+        case 5:
+            PromedioDePreciosDeVenta(inventario);
             break;
 
         }

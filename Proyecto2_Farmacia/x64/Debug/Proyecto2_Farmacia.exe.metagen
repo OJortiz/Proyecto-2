@@ -1,5 +1,5 @@
 ImageRuntimeVersion: v4.0.30319
-Assembly Proyecto2_Farmacia, Version=1.0.*, Culture=Todos los idiomas (todos los países): 
+Assembly Proyecto2_Farmacia, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=SHA1, flags=PublicKey
 Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
@@ -12,18 +12,18 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 Class Inventario`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   Type parameter: T
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-    Void .ctor(Int32, System.DateTime, Proveedor`1[T], Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Int32, Int32, Proveedor`1[T], Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Properties:
     Double PrecioVenta 'get set' : 
     Double PrecioCompra 'get set' : 
     Proveedor`1[T] ProveedorAsociado 'get set' : 
-    System.DateTime FechaCaducidad 'get set' : 
+    Int32 FechaCaducidad 'get set' : 
     Int32 CantidadStock 'get set' : 
   Methods:
     get_CantidadStock(): PrivateScope, Public, HideBySig, SpecialName
     set_CantidadStock(Int32): PrivateScope, Public, HideBySig, SpecialName
     get_FechaCaducidad(): PrivateScope, Public, HideBySig, SpecialName
-    set_FechaCaducidad(DateTime): PrivateScope, Public, HideBySig, SpecialName
+    set_FechaCaducidad(Int32): PrivateScope, Public, HideBySig, SpecialName
     get_ProveedorAsociado(): PrivateScope, Public, HideBySig, SpecialName
     set_ProveedorAsociado(Proveedor`1): PrivateScope, Public, HideBySig, SpecialName
     get_PrecioCompra(): PrivateScope, Public, HideBySig, SpecialName
@@ -45,6 +45,7 @@ Class ListaDE`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     GetAt(Int32): PrivateScope, Public, HideBySig
     GetFirst(): PrivateScope, Public, HideBySig
     GetLast(): PrivateScope, Public, HideBySig
+    GetSumaRecorrer(): PrivateScope, Public, HideBySig
     GetFirstNode(): PrivateScope, Public, HideBySig
     ObtenerLista(): PrivateScope, Public, HideBySig
     Dispose(): PrivateScope, Public, Final, Virtual, HideBySig

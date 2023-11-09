@@ -7,14 +7,14 @@ generic <typename T>
 Inventario<T>::Inventario()
 {
     CantidadStock = 0;
-    FechaCaducidad = DateTime::Now;
+    FechaCaducidad = 0;
     ProveedorAsociado = nullptr;
     PrecioCompra = 0.0;
     PrecioVenta = 0.0;
 }
 
 generic <typename T>
-Inventario<T>::Inventario(int cantidadStock, DateTime fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta)
+Inventario<T>::Inventario(int cantidadStock, int fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta)
 {
     CantidadStock = cantidadStock;
     FechaCaducidad = fechaCaducidad;

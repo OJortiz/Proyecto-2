@@ -19,6 +19,7 @@ public:
     T GetAt(int index);
     T GetFirst();
     T GetLast();
+    T GetSumaRecorrer();
     Node<T>^ GetFirstNode();
     ListaDE<T>^ ObtenerLista();
 

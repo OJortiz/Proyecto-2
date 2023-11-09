@@ -10,11 +10,11 @@ public ref class Inventario
 {
 public:
     property int CantidadStock;
-    property DateTime FechaCaducidad;
+    property int FechaCaducidad;
     property Proveedor<T>^ ProveedorAsociado;
     property double PrecioCompra;
     property double PrecioVenta;
 
     Inventario();
-    Inventario(int cantidadStock, DateTime fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta);
+    Inventario(int cantidadStock, int fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta);
 };
