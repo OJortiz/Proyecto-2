@@ -1,11 +1,7 @@
-﻿  Inventario.cpp
-C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(14,14): warning C4677: 'ProveedorAsociado': signature of non-private member contains assembly private type 'Proveedor<T>'
-C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(20,15): warning C4677: 'Inventario<`generic-class-parameter-1'>': signature of non-private member contains assembly private type 'Proveedor<T>'
-  Proyecto2_Farmacia.cpp
+﻿  Proyecto2_Farmacia.cpp
 C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\ListaDE.h(23,28): warning C4677: 'GetFirstNode': signature of non-private member contains assembly private type 'Node<T>'
 C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(14,14): warning C4677: 'ProveedorAsociado': signature of non-private member contains assembly private type 'Proveedor<T>'
 C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(20,15): warning C4677: 'Inventario<`generic-class-parameter-1'>': signature of non-private member contains assembly private type 'Proveedor<T>'
-C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(130,39): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(131,39): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   Proyecto2_Farmacia.vcxproj -> C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\x64\Debug\Proyecto2_Farmacia.exe
