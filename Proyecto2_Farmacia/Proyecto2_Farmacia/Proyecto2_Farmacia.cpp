@@ -8,14 +8,14 @@ using namespace System;
 using namespace System::Collections::Generic;
 
 
-void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario) {
+void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario, ListaDE<Proveedor<String^>^>^ proveedorList) {
 
     // Solicitar al usuario que ingrese los datos del medicamento
     Console::WriteLine("Ingrese los datos del medicamento:");
     Console::Write("Nombre: ");
     String^ nombre = Console::ReadLine();
     Console::Write("Número de Registro: ");
-    String^ numRegistro = Console::ReadLine();
+    int numRegistro = Convert::ToInt32(Console::ReadLine());
     Console::Write("Categoría: ");
     String^ categoria = Console::ReadLine();
 
@@ -49,9 +49,10 @@ void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inve
     Console::Write("Dirección de Contacto del Proveedor: ");
     String^ direccionProveedor = Console::ReadLine();
 
-    Proveedor<String^>^ proveedor = gcnew Proveedor<String^>(nombreProveedor, "ProveedorID", direccionProveedor, direccionProveedor, telefonoProveedor, "proveedor@example.com");
-    Inventario<String^>^ nuevoInventario = gcnew Inventario<String^>(cantidadStock, fechaCaducidad, proveedor, precioCompra, precioVenta);
+    Proveedor<String^>^ Newproveedor = gcnew Proveedor<String^>(nombreProveedor, "ProveedorID", direccionProveedor, direccionProveedor, telefonoProveedor, "proveedor@example.com",numRegistro);
+    Inventario<String^>^ nuevoInventario = gcnew Inventario<String^>(cantidadStock, fechaCaducidad, Newproveedor, precioCompra, precioVenta,numRegistro);
     inventario->Add(nuevoInventario);
+    proveedorList->Add(Newproveedor);
 
     // Mostrar la información del medicamento y su inventario
     Console::WriteLine("\nInformación del Medicamento registrado:");
@@ -102,7 +103,7 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         // Solicitar al usuario que ingrese los nuevos detalles
         Console::WriteLine("Ingrese los nuevos detalles del medicamento:");
         Console::Write("Número de Registro: ");
-        String^ nuevoNumRegistro = Console::ReadLine();
+        int nuevoNumRegistro = Convert::ToInt32(Console::ReadLine());
 
         // Actualizar los detalles del medicamento
         medicamento->NumRegistro = nuevoNumRegistro;
@@ -142,6 +143,136 @@ void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
     return;
 
     }
+
+
+void MostrarValoresDeInventario(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario) {
+    Console::Write("Ingrese el nombre del medicamento que desea buscar: ");
+    String^ consulta = Console::ReadLine();
+    // Obttiene el medicamento
+
+    List<Medicamento<String^>^>^ listaMedicamentosLista = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ currentMed = listaMedicamentos->GetFirstNode();
+    List<Inventario<String^>^>^ InventarioCurrent = gcnew List<Inventario<String^>^>();
+    Node<Inventario<String^>^>^ currentInv = inventario->GetFirstNode();
+
+    while (currentMed != nullptr) {
+        listaMedicamentosLista->Add(currentMed->value);
+        currentMed = currentMed->next;
+    }
+
+    while (currentInv != nullptr) {
+        InventarioCurrent->Add(currentInv->value);
+        currentInv = currentInv->next;
+    }
+    int reg = 0;
+    if (listaMedicamentosLista->Count > 0)
+    {
+        for each (Medicamento<String^> ^ med in listaMedicamentosLista)
+        {
+            if (med->Nombre == consulta)
+            {
+                reg = med->NumRegistro;
+            }
+        }
+    }
+    else
+    {
+        Console::WriteLine("No se encontraron medicamentos que coincidan con la consulta.");
+    }
+    if (InventarioCurrent->Count > 0)
+    {
+        for each (Inventario<String^> ^ med in InventarioCurrent)
+        {
+            med->NumRegistro;
+            if (med->NumRegistro == reg)
+            {
+                Console::WriteLine("Detalles actuales de inventario del medicamento:");
+                Console::WriteLine("Cantidad en stock: " + med->CantidadStock);
+                Console::WriteLine("Fecha de caducidad: " + med->FechaCaducidad);
+                Console::WriteLine("Proveedor Asociado: " + med->ProveedorAsociado);
+                Console::WriteLine("Precio de compra: " + med->PrecioCompra);
+                Console::WriteLine("Precio de venta: " + med->PrecioVenta);
+
+            }
+        }
+    }
+    else
+    {
+        Console::WriteLine("Error de registro");
+    }
+}
+
+void ConsultarMedicamentoMasCaroDeProveedor(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario, ListaDE<Proveedor<String^>^>^ Proveedores) {
+    List<Medicamento<String^>^>^ listaMedicamentosLista = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ currentMed = listaMedicamentos->GetFirstNode();
+    List<Inventario<String^>^>^ InventarioCurrent = gcnew List<Inventario<String^>^>();
+    Node<Inventario<String^>^>^ currentInv = inventario->GetFirstNode();
+    List<Proveedor<String^>^>^ ProveedoresCurrent = gcnew List<Proveedor<String^>^>();
+    Node<Proveedor<String^>^>^ currentProveedor = Proveedores->GetFirstNode();
+    Console::Write("Ingrese el proveedor que desea consultar: ");
+    String^ consulta = Console::ReadLine();
+    double CurrentRegMax = 0;
+    double CurrentMaxPrice = 0;
+    String^ MedicinaMasCara = "";
+    int numReg;
+    while (currentMed != nullptr) {
+        listaMedicamentosLista->Add(currentMed->value);
+        currentMed = currentMed->next;
+    }
+
+    while (currentInv != nullptr) {
+        InventarioCurrent->Add(currentInv->value);
+        currentInv = currentInv->next;
+    }
+
+    while (currentProveedor != nullptr) {
+        ProveedoresCurrent->Add(currentProveedor->value);
+        currentProveedor = currentProveedor->next;
+    }
+    if (ProveedoresCurrent->Count > 0)
+    {
+        for each (Proveedor<String^> ^ proveedor in ProveedoresCurrent)
+        {
+            if (proveedor->Nombre == consulta)
+            {
+                numReg = proveedor->NumRegistro;
+                if (listaMedicamentosLista->Count > 0) {
+                    for each (Medicamento<String^> ^ med in listaMedicamentosLista)
+                    {
+                        if (numReg == med->NumRegistro) {
+                            if (InventarioCurrent->Count > 0) {
+                                for each (Inventario<String^> ^ Invent in InventarioCurrent)
+                                {
+                                    if (numReg == Invent->NumRegistro){
+                                        if (Invent->PrecioCompra > CurrentMaxPrice) {
+                                            CurrentMaxPrice = Invent->PrecioCompra;
+                                            CurrentRegMax = numReg;
+                                            for each (Medicamento<String^> ^ med in listaMedicamentosLista)
+                                            {
+                                                if (CurrentRegMax = med->NumRegistro) {
+                                                    MedicinaMasCara = med->Nombre;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                                
+                        }
+                    }
+                }
+            }
+        }
+        Console::WriteLine("La medicina del proveedor " + consulta + " mas cara es: " + MedicinaMasCara+", con un precio de "+CurrentMaxPrice);
+    }
+    else 
+    {
+        Console::WriteLine("No existen proveedores");
+    }
+}
+
+
+
 
 
 void ConsultarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
@@ -193,6 +324,7 @@ int main(array<System::String ^> ^args)
 
     ListaDE<Medicamento<String^>^>^ listaMedicamentos = gcnew ListaDE<Medicamento<String^>^>();
     ListaDE<Inventario<String^>^>^ inventario = gcnew ListaDE<Inventario<String^>^>();
+    ListaDE<Proveedor<String^>^>^ proveedorList = gcnew ListaDE<Proveedor<String^>^>();
 
 
     do {
@@ -214,7 +346,7 @@ int main(array<System::String ^> ^args)
         switch (opcion)
         {
         case 1:
-            IngresarMed(listaMedicamentos, inventario);
+            IngresarMed(listaMedicamentos, inventario,proveedorList);
 
             // Preguntar al usuario si desea ingresar un nuevo medicamento o regresar al menú
             Console::Write("¿Desea ingresar un nuevo medicamento? (S/N): ");
@@ -239,6 +371,13 @@ int main(array<System::String ^> ^args)
         case 5:
             PromedioDePreciosDeVenta(inventario);
             break;
+
+        case 6:
+            MostrarValoresDeInventario(listaMedicamentos, inventario);
+            break;
+
+        case 7:
+            ConsultarMedicamentoMasCaroDeProveedor(listaMedicamentos, inventario, proveedorList);
 
         }
     }

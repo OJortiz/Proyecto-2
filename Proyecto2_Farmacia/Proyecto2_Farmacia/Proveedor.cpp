@@ -12,10 +12,11 @@ Proveedor<T>::Proveedor()
     DireccionContacto = nullptr;
     Telefono = nullptr;
     EMail = nullptr;
+    NumRegistro = 0;
 }
 
 generic <typename T>
-Proveedor<T>::Proveedor(String^ nombre, String^ nt, String^ direccionFiscal, String^ direccionContacto, String^ telefono, String^ correoElectronico)
+Proveedor<T>::Proveedor(String^ nombre, String^ nt, String^ direccionFiscal, String^ direccionContacto, String^ telefono, String^ correoElectronico, int NumRegistro)
 {
     Nombre = nombre;
     NT = nt;

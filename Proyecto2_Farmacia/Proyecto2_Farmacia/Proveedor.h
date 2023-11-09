@@ -11,9 +11,10 @@ public:
     String^ DireccionContacto;
     String^ Telefono;
     String^ EMail;
+    property int NumRegistro;
 
     Proveedor();
-    Proveedor(String^ nombre, String^ nt, String^ direccionFiscal, String^ direccionContacto, String^ telefono, String^ EMail);
+    Proveedor(String^ nombre, String^ nt, String^ direccionFiscal, String^ direccionContacto, String^ telefono, String^ EMail, int NumRegistro);
 
 };
 

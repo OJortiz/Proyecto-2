@@ -12,8 +12,9 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 Class Inventario`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   Type parameter: T
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-    Void .ctor(Int32, Int32, Proveedor`1[T], Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Int32, Int32, Proveedor`1[T], Double, Double, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Properties:
+    Int32 NumRegistro 'get set' : 
     Double PrecioVenta 'get set' : 
     Double PrecioCompra 'get set' : 
     Proveedor`1[T] ProveedorAsociado 'get set' : 
@@ -30,6 +31,8 @@ Class Inventario`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     set_PrecioCompra(Double): PrivateScope, Public, HideBySig, SpecialName
     get_PrecioVenta(): PrivateScope, Public, HideBySig, SpecialName
     set_PrecioVenta(Double): PrivateScope, Public, HideBySig, SpecialName
+    get_NumRegistro(): PrivateScope, Public, HideBySig, SpecialName
+    set_NumRegistro(Int32): PrivateScope, Public, HideBySig, SpecialName
 Class ListaDE`1[T]: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   Type parameter: T
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

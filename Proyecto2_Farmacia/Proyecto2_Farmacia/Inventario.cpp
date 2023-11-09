@@ -11,14 +11,16 @@ Inventario<T>::Inventario()
     ProveedorAsociado = nullptr;
     PrecioCompra = 0.0;
     PrecioVenta = 0.0;
-}
+    NumRegistro = 0;
+};
 
 generic <typename T>
-Inventario<T>::Inventario(int cantidadStock, int fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta)
+Inventario<T>::Inventario(int cantidadStock, int fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta, int numRegistro)
 {
     CantidadStock = cantidadStock;
     FechaCaducidad = fechaCaducidad;
     ProveedorAsociado = proveedorAsociado; // Corregido el nombre de la propiedad
     PrecioCompra = precioCompra;
     PrecioVenta = precioVenta;
+    NumRegistro = numRegistro;
 }

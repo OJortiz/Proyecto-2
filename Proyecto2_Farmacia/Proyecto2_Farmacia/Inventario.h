@@ -14,7 +14,8 @@ public:
     property Proveedor<T>^ ProveedorAsociado;
     property double PrecioCompra;
     property double PrecioVenta;
+    property int NumRegistro;
 
     Inventario();
-    Inventario(int cantidadStock, int fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta);
+    Inventario(int cantidadStock, int fechaCaducidad, Proveedor<T>^ proveedorAsociado, double precioCompra, double precioVenta, int numRegistro);
 };
