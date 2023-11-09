@@ -8,13 +8,13 @@ ref class Medicamento
 {
 public:
 	String^ Nombre;
-	String^ NumRegistro;
+	int NumRegistro;
 	String^ Categoria;
 	List<String^>^ PrincipiosA;
 	String^ Dosis;
 
 	Medicamento();
-	Medicamento(String^ nombre, String^ numRegistro, String^ categoria, List<String^>^ principiosActivos, String^ dosisRecomendada);
+	Medicamento(String^ nombre, int numRegistro, String^ categoria, List<String^>^ principiosActivos, String^ dosisRecomendada);
 
 };
 

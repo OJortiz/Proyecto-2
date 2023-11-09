@@ -15,7 +15,7 @@ void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inve
     Console::Write("Nombre: ");
     String^ nombre = Console::ReadLine();
     Console::Write("Número de Registro: ");
-    String^ numRegistro = Console::ReadLine();
+    int numRegistro = Convert::ToInt32(Console::ReadLine());
     Console::Write("Categoría: ");
     String^ categoria = Console::ReadLine();
 
@@ -49,8 +49,8 @@ void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inve
     Console::Write("Dirección de Contacto del Proveedor: ");
     String^ direccionProveedor = Console::ReadLine();
 
-    Proveedor<String^>^ proveedor = gcnew Proveedor<String^>(nombreProveedor, "ProveedorID", direccionProveedor, direccionProveedor, telefonoProveedor, "proveedor@example.com");
-    Inventario<String^>^ nuevoInventario = gcnew Inventario<String^>(cantidadStock, fechaCaducidad, proveedor, precioCompra, precioVenta);
+    Proveedor<String^>^ proveedor = gcnew Proveedor<String^>(nombreProveedor, "ProveedorID", direccionProveedor, direccionProveedor, telefonoProveedor, "proveedor@example.com",numRegistro);
+    Inventario<String^>^ nuevoInventario = gcnew Inventario<String^>(cantidadStock, fechaCaducidad, proveedor, precioCompra, precioVenta,numRegistro);
     inventario->Add(nuevoInventario);
 
     // Mostrar la información del medicamento y su inventario
@@ -102,7 +102,7 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         // Solicitar al usuario que ingrese los nuevos detalles
         Console::WriteLine("Ingrese los nuevos detalles del medicamento:");
         Console::Write("Número de Registro: ");
-        String^ nuevoNumRegistro = Console::ReadLine();
+        int nuevoNumRegistro = Convert::ToInt32(Console::ReadLine());
 
         // Actualizar los detalles del medicamento
         medicamento->NumRegistro = nuevoNumRegistro;
@@ -142,6 +142,65 @@ void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
     return;
 
     }
+
+
+void MostrarValoresDeInventario(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario) {
+    Console::Write("Ingrese el nombre del medicamento que desea buscar: ");
+    String^ consulta = Console::ReadLine();
+    // Obttiene el medicamento
+
+    List<Medicamento<String^>^>^ listaMedicamentosLista = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ currentMed = listaMedicamentos->GetFirstNode();
+    List<Inventario<String^>^>^ InventarioCurrent = gcnew List<Inventario<String^>^>();
+    Node<Inventario<String^>^>^ currentInv = inventario->GetFirstNode();
+
+    while (currentMed != nullptr) {
+        listaMedicamentosLista->Add(currentMed->value);
+        currentMed = currentMed->next;
+    }
+
+    while (currentInv != nullptr) {
+        InventarioCurrent->Add(currentInv->value);
+        currentInv = currentInv->next;
+    }
+    int reg = 0;
+    if (listaMedicamentosLista->Count > 0)
+    {
+        for each (Medicamento<String^> ^ med in listaMedicamentosLista)
+        {
+            if (med->Nombre == consulta)
+            {
+                reg = med->NumRegistro;
+            }
+        }
+    }
+    else
+    {
+        Console::WriteLine("No se encontraron medicamentos que coincidan con la consulta.");
+    }
+    if (InventarioCurrent->Count > 0)
+    {
+        for each (Inventario<String^> ^ med in InventarioCurrent)
+        {
+            med->NumRegistro;
+            if (med->NumRegistro == reg)
+            {
+                Console::WriteLine("Detalles actuales de inventario del medicamento:");
+                Console::WriteLine("Cantidad en stock: " + med->CantidadStock);
+                Console::WriteLine("Fecha de caducidad: " + med->FechaCaducidad);
+                Console::WriteLine("Proveedor Asociado: " + med->ProveedorAsociado);
+                Console::WriteLine("Precio de compra: " + med->PrecioCompra);
+                Console::WriteLine("Precio de venta: " + med->PrecioVenta);
+
+            }
+        }
+    }
+    else
+    {
+        Console::WriteLine("Error de registro");
+    }
+}
+
 
 
 void ConsultarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
@@ -238,6 +297,10 @@ int main(array<System::String ^> ^args)
 
         case 5:
             PromedioDePreciosDeVenta(inventario);
+            break;
+
+        case 6:
+            MostrarValoresDeInventario(listaMedicamentos, inventario);
             break;
 
         }
