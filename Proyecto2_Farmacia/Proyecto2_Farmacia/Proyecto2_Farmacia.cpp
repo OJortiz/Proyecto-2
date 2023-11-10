@@ -6,6 +6,7 @@
 
 using namespace System;
 using namespace System::Collections::Generic;
+using namespace System::IO;
 
 
 void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario, ListaDE<Proveedor<String^>^>^ proveedorList) {
@@ -116,6 +117,7 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         Console::WriteLine("El medicamento no se encontró en la lista.");
     }
 }
+
 void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
     List<Inventario<String^>^>^ InventarioCurrent = gcnew List<Inventario<String^>^>();
     int cantidad = inventario->Count;
@@ -143,7 +145,6 @@ void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
     return;
 
     }
-
 
 void MostrarValoresDeInventario(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario) {
     Console::Write("Ingrese el nombre del medicamento que desea buscar: ");
@@ -271,10 +272,6 @@ void ConsultarMedicamentoMasCaroDeProveedor(ListaDE<Medicamento<String^>^>^ list
     }
 }
 
-
-
-
-
 void ConsultarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
 {
     Console::Write("Ingrese el nombre o principio activo del medicamento que desea buscar: ");
@@ -314,6 +311,46 @@ void ConsultarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
         Console::WriteLine("No se encontraron medicamentos que coincidan con la consulta.");
     }
 }
+
+ref class MedicamentoComparer : public System::Collections::Generic::IComparer<Medicamento<String^>^>
+{
+public:
+    virtual int Compare(Medicamento<String^>^ med1, Medicamento<String^>^ med2)
+    {
+        return med1->Nombre->CompareTo(med2->Nombre);
+    }
+};
+
+
+void GenerarInformeMedicamentos(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
+{
+    // Crear una lista ordenada de medicamentos por nombre
+    List<Medicamento<String^>^>^ medicamentosOrdenados = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
+
+    while (current != nullptr) {
+        medicamentosOrdenados->Add(current->value);
+        current = current->next;
+    }
+
+    MedicamentoComparer^ comparer = gcnew MedicamentoComparer();
+    medicamentosOrdenados->Sort(comparer);
+
+    // Mostrar el informe por consola
+    Console::WriteLine("Informe de Medicamentos:");
+    for each (Medicamento<String^> ^ med in medicamentosOrdenados) {
+        Console::WriteLine("Nombre: " + med->Nombre);
+        Console::WriteLine("Número de Registro: " + med->NumRegistro);
+        Console::WriteLine("Categoría: " + med->Categoria);
+        Console::WriteLine("Principios Activos:");
+        for each (String ^ principioActivo in med->PrincipiosA) {
+            Console::WriteLine("   - " + principioActivo);
+        }
+        Console::WriteLine("Dosis Recomendada: " + med->Dosis);
+        Console::WriteLine();
+    }
+}
+
 
 int main(array<System::String ^> ^args)
 {
@@ -366,6 +403,7 @@ int main(array<System::String ^> ^args)
             break;
 
         case 4:
+            GenerarInformeMedicamentos(listaMedicamentos);
             break;
 
         case 5:
@@ -379,6 +417,9 @@ int main(array<System::String ^> ^args)
         case 7:
             ConsultarMedicamentoMasCaroDeProveedor(listaMedicamentos, inventario, proveedorList);
 
+        case 9:
+            salir = true;
+            break;
         }
     }
         while (!salir);
