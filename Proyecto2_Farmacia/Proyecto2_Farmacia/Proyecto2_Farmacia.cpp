@@ -383,8 +383,6 @@ void BuscarMedicamentoPorPrincipioActivo(ListaDE<Medicamento<String^>^>^ listaMe
     }
 }
 
-
-
 ref class MedicamentoComparer : public System::Collections::Generic::IComparer<Medicamento<String^>^>
 {
 public:
@@ -393,6 +391,7 @@ public:
         return med1->Nombre->CompareTo(med2->Nombre);
     }
 };
+
 void GenerarInformeMedicamentos(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
 {
     // Crear una lista ordenada de medicamentos por nombre
