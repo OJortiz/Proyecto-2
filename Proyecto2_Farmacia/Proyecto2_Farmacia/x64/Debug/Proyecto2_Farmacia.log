@@ -1,7 +1,17 @@
-﻿  Proyecto2_Farmacia.cpp
+﻿  Medicamento.cpp
+  Proyecto2_Farmacia.cpp
 C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\ListaDE.h(23,28): warning C4677: 'GetFirstNode': signature of non-private member contains assembly private type 'Node<T>'
 C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(14,14): warning C4677: 'ProveedorAsociado': signature of non-private member contains assembly private type 'Proveedor<T>'
 C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Inventario.h(20,15): warning C4677: 'Inventario<`generic-class-parameter-1'>': signature of non-private member contains assembly private type 'Proveedor<T>'
-C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(131,39): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(29,27): warning C4101: 'ex': unreferenced local variable
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(50,27): warning C4101: 'ex': unreferenced local variable
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(77,27): warning C4101: 'ex': unreferenced local variable
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(96,27): warning C4101: 'ex': unreferenced local variable
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(137,27): warning C4101: 'ex': unreferenced local variable
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(174,31): warning C4101: 'ex': unreferenced local variable
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(202,39): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(228,27): warning C4101: 'ex': unreferenced local variable
+C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(302,27): warning C4101: 'ex': unreferenced local variable
+  Generating Code...
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   Proyecto2_Farmacia.vcxproj -> C:\Users\Francisco U\Documents\GitHub\Proyecto-2\Proyecto2_Farmacia\x64\Debug\Proyecto2_Farmacia.exe

@@ -9,46 +9,95 @@ using namespace System::Collections::Generic;
 
 
 void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario, ListaDE<Proveedor<String^>^>^ proveedorList) {
-
+    bool confirmar = true;
+    String^ nombre;
+    int numRegistro;
+    String^ categoria;
     // Solicitar al usuario que ingrese los datos del medicamento
-    Console::WriteLine("Ingrese los datos del medicamento:");
-    Console::Write("Nombre: ");
-    String^ nombre = Console::ReadLine();
-    Console::Write("Número de Registro: ");
-    int numRegistro = Convert::ToInt32(Console::ReadLine());
-    Console::Write("Categoría: ");
-    String^ categoria = Console::ReadLine();
-
-    List<String^>^ principiosActivos = gcnew List<String^>();
+    do {
+        try
+        {
+            Console::WriteLine("Ingrese los datos del medicamento:");
+            Console::Write("Nombre: ");
+            nombre = Console::ReadLine();
+            Console::Write("Número de Registro: ");
+            numRegistro = Convert::ToInt32(Console::ReadLine());
+            Console::Write("Categoría: ");
+            categoria = Console::ReadLine();
+            confirmar = false;
+        }
+        catch(Exception ^ ex)
+        {
+            Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+        }
+    }
+    while (confirmar == true);
+    String^ principiosActivosInput;
+    String^ dosisRecomendada;
+    List<String^>^ principiosActivos;
+    do {
+        try
+        {
+    principiosActivos = gcnew List<String^>();
     Console::Write("Principios Activos (separados por comas): ");
-    String^ principiosActivosInput = Console::ReadLine();
+    principiosActivosInput = Console::ReadLine();
     array<String^>^ principios = principiosActivosInput->Split(',');
     principiosActivos->AddRange(principios);
-
     Console::Write("Dosis Recomendada: ");
-    String^ dosisRecomendada = Console::ReadLine();
+    dosisRecomendada = Console::ReadLine();
+    confirmar = true;
+        }
+        catch (Exception^ ex)
+        {
+            Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+        }
+    } while (confirmar == false);
 
     Medicamento<String^>^ nuevoMedicamento = gcnew Medicamento<String^>(nombre, numRegistro, categoria, principiosActivos, dosisRecomendada);
     listaMedicamentos->Add(nuevoMedicamento);
-
+    int cantidadStock;
+    int fechaCaducidad;
+    double precioCompra;
+    double precioVenta;
+    do {
+        try
+        {
     // Solicitar al usuario que ingrese los datos del inventario
     Console::WriteLine("\nIngrese los datos del inventario del medicamento:");
     Console::Write("Cantidad en Stock: ");
-    int cantidadStock = Convert::ToInt32(Console::ReadLine());
+    cantidadStock = Convert::ToInt32(Console::ReadLine());
     Console::Write("Fecha de Caducidad (yyyy-MM-dd): ");
-    int fechaCaducidad = Convert::ToInt32(Console::ReadLine());
+    fechaCaducidad = Convert::ToInt32(Console::ReadLine());
     Console::Write("Precio de Compra: ");
-    double precioCompra = Convert::ToDouble(Console::ReadLine());
+    precioCompra = Convert::ToDouble(Console::ReadLine());
     Console::Write("Precio de Venta: ");
-    double precioVenta = Convert::ToDouble(Console::ReadLine());
-
+    precioVenta = Convert::ToDouble(Console::ReadLine());
+    confirmar = false;
+        }
+        catch (Exception^ ex)
+        {
+            Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+        }
+    } while (confirmar == true);
+    String^ nombreProveedor;
+    String^ telefonoProveedor;
+    String^ direccionProveedor;
+    do {
+        try
+        {
     Console::Write("Proveedor: ");
-    String^ nombreProveedor = Console::ReadLine();
+    nombreProveedor = Console::ReadLine();
     Console::Write("Número de Teléfono del Proveedor: ");
-    String^ telefonoProveedor = Console::ReadLine();
+    telefonoProveedor = Console::ReadLine();
     Console::Write("Dirección de Contacto del Proveedor: ");
-    String^ direccionProveedor = Console::ReadLine();
-
+    direccionProveedor = Console::ReadLine();
+    confirmar = true;
+        }
+        catch (Exception^ ex)
+        {
+            Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+        }
+    } while (confirmar == false);
     Proveedor<String^>^ Newproveedor = gcnew Proveedor<String^>(nombreProveedor, "ProveedorID", direccionProveedor, direccionProveedor, telefonoProveedor, "proveedor@example.com",numRegistro);
     Inventario<String^>^ nuevoInventario = gcnew Inventario<String^>(cantidadStock, fechaCaducidad, Newproveedor, precioCompra, precioVenta,numRegistro);
     inventario->Add(nuevoInventario);
@@ -78,7 +127,18 @@ void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inve
 
 void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario) {
     Console::Write("Ingrese el nombre del medicamento a actualizar: ");
-    String^ nombreMedicamento = Console::ReadLine();
+    String^ nombreMedicamento;
+    bool confirmar = true;
+    do {
+        try {
+            nombreMedicamento = Console::ReadLine();
+            confirmar = false;
+        }
+        catch (Exception^ ex)
+        {
+            Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+        }
+    } while (confirmar == true);
 
     Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
     Medicamento<String^>^ medicamento = nullptr;
@@ -103,8 +163,19 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         // Solicitar al usuario que ingrese los nuevos detalles
         Console::WriteLine("Ingrese los nuevos detalles del medicamento:");
         Console::Write("Número de Registro: ");
-        int nuevoNumRegistro = Convert::ToInt32(Console::ReadLine());
-
+        int nuevoNumRegistro;
+        bool confirm = false;
+        do {
+            try
+            {
+                nuevoNumRegistro = Convert::ToInt32(Console::ReadLine());
+                confirm = true;
+            }
+            catch (Exception^ ex)
+            {
+                Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+            }
+        } while (confirm == false);
         // Actualizar los detalles del medicamento
         medicamento->NumRegistro = nuevoNumRegistro;
 
@@ -147,7 +218,18 @@ void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
 
 void MostrarValoresDeInventario(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario) {
     Console::Write("Ingrese el nombre del medicamento que desea buscar: ");
-    String^ consulta = Console::ReadLine();
+    String^ consulta;
+    bool verificar = false;
+    do {
+        try {
+            consulta = Console::ReadLine();
+            verificar = true;
+        }
+        catch (Exception^ ex)
+        {
+            Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+        }
+    } while (verificar == false);
     // Obttiene el medicamento
 
     List<Medicamento<String^>^>^ listaMedicamentosLista = gcnew List<Medicamento<String^>^>();
@@ -210,7 +292,18 @@ void ConsultarMedicamentoMasCaroDeProveedor(ListaDE<Medicamento<String^>^>^ list
     List<Proveedor<String^>^>^ ProveedoresCurrent = gcnew List<Proveedor<String^>^>();
     Node<Proveedor<String^>^>^ currentProveedor = Proveedores->GetFirstNode();
     Console::Write("Ingrese el proveedor que desea consultar: ");
-    String^ consulta = Console::ReadLine();
+    String^ consulta;
+    bool verificar = false;
+    do {
+        try {
+            consulta = Console::ReadLine();
+            verificar = true;
+        }
+        catch (Exception^ ex)
+        {
+            Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+        }
+    } while (verificar == false);
     double CurrentRegMax = 0;
     double CurrentMaxPrice = 0;
     String^ MedicinaMasCara = "";
