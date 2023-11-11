@@ -1,8 +1,12 @@
 #pragma once
 #include "Node.h"
+#include "Medicamento.h"
+
+using namespace System::Collections;
+using namespace System::Collections::Generic;
 
 generic <typename T>
-public ref class ListaDE
+public ref class ListaDE 
 {
 public:
     ListaDE();
@@ -29,7 +33,3 @@ private:
     int count;
 
 };
-
-
-
-

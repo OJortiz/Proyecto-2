@@ -155,3 +155,4 @@ ListaDE<T>^ ListaDE<T>::ObtenerLista()
 
     return lista;
 }
+
