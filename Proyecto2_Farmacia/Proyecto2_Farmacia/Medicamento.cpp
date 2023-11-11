@@ -8,7 +8,7 @@ Medicamento<T>::Medicamento()
     NumRegistro = 0;
     Categoria = nullptr;
     PrincipiosA = gcnew List<String^>();
-    Dosis = nullptr;
+    Dosis = nullptr; 
 }
 
 generic <typename T>
