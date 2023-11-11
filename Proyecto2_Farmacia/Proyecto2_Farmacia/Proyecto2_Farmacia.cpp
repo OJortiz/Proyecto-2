@@ -6,6 +6,7 @@
 
 using namespace System;
 using namespace System::Collections::Generic;
+using namespace System::IO;
 
 
 void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario, ListaDE<Proveedor<String^>^>^ proveedorList) {
@@ -187,6 +188,7 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         Console::WriteLine("El medicamento no se encontró en la lista.");
     }
 }
+
 void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
     List<Inventario<String^>^>^ InventarioCurrent = gcnew List<Inventario<String^>^>();
     int cantidad = inventario->Count;
@@ -214,7 +216,6 @@ void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
     return;
 
     }
-
 
 void MostrarValoresDeInventario(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario) {
     Console::Write("Ingrese el nombre del medicamento que desea buscar: ");
@@ -364,10 +365,6 @@ void ConsultarMedicamentoMasCaroDeProveedor(ListaDE<Medicamento<String^>^>^ list
     }
 }
 
-
-
-
-
 void ConsultarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
 {
     Console::Write("Ingrese el nombre o principio activo del medicamento que desea buscar: ");
@@ -408,6 +405,140 @@ void ConsultarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
     }
 }
 
+void BuscarMedicamentoPorCategoria(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
+{
+    Console::Write("Ingrese la categoría del medicamento que desea buscar: ");
+    String^ consulta = Console::ReadLine();
+    // Obtén la lista de medicamentos
+
+    List<Medicamento<String^>^>^ listaMedicamentosLista = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
+
+    while (current != nullptr) {
+        listaMedicamentosLista->Add(current->value);
+        current = current->next;
+    }
+
+    if (listaMedicamentosLista->Count > 0)
+    {
+        Console::WriteLine("Medicamentos encontrados:");
+        for each (Medicamento<String^> ^ med in listaMedicamentosLista)
+        {
+            if (med->Categoria->Equals(consulta, StringComparison::CurrentCultureIgnoreCase))
+            {
+                Console::WriteLine("Nombre: " + med->Nombre);
+                Console::WriteLine("Categoría: " + med->Categoria);
+                Console::WriteLine();
+            }
+        }
+    }
+    else
+    {
+        Console::WriteLine("No se encontraron medicamentos que coincidan con la consulta.");
+    }
+}
+
+void BuscarMedicamentoPorPrincipioActivo(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
+{
+    Console::Write("Ingrese el principio activo del medicamento que desea buscar: ");
+    String^ consulta = Console::ReadLine();
+    // Obtén la lista de medicamentos
+
+    List<Medicamento<String^>^>^ listaMedicamentosLista = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
+
+    while (current != nullptr) {
+        listaMedicamentosLista->Add(current->value);
+        current = current->next;
+    }
+
+    if (listaMedicamentosLista->Count > 0)
+    {
+        Console::WriteLine("Medicamentos encontrados:");
+        for each (Medicamento<String^> ^ med in listaMedicamentosLista)
+        {
+            if (med->PrincipiosA->Contains(consulta))
+            {
+                Console::WriteLine("Nombre: " + med->Nombre);
+                Console::WriteLine("Principios Activos:");
+                for each (String ^ principioActivo in med->PrincipiosA)
+                {
+                    Console::WriteLine("   - " + principioActivo);
+                }
+                Console::WriteLine("Categoría: " + med->Categoria);
+                Console::WriteLine();
+            }
+        }
+    }
+    else
+    {
+        Console::WriteLine("No se encontraron medicamentos que coincidan con la consulta.");
+    }
+}
+
+
+
+ref class MedicamentoComparer : public System::Collections::Generic::IComparer<Medicamento<String^>^>
+{
+public:
+    virtual int Compare(Medicamento<String^>^ med1, Medicamento<String^>^ med2)
+    {
+        return med1->Nombre->CompareTo(med2->Nombre);
+    }
+};
+void GenerarInformeMedicamentos(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
+{
+    // Crear una lista ordenada de medicamentos por nombre
+    List<Medicamento<String^>^>^ medicamentosOrdenados = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
+
+    while (current != nullptr) {
+        medicamentosOrdenados->Add(current->value);
+        current = current->next;
+    }
+
+    MedicamentoComparer^ comparer = gcnew MedicamentoComparer();
+    medicamentosOrdenados->Sort(comparer);
+
+    // Mostrar el informe por consola
+    Console::WriteLine("Informe de Medicamentos:");
+    for each (Medicamento<String^> ^ med in medicamentosOrdenados) {
+        Console::WriteLine("Nombre: " + med->Nombre);
+        Console::WriteLine("Número de Registro: " + med->NumRegistro);
+        Console::WriteLine("Categoría: " + med->Categoria);
+        Console::WriteLine("Principios Activos:");
+        for each (String ^ principioActivo in med->PrincipiosA) {
+            Console::WriteLine("   - " + principioActivo);
+        }
+        Console::WriteLine("Dosis Recomendada: " + med->Dosis);
+        Console::WriteLine();
+    }
+
+    // Nombre del archivo CSV
+    String^ fileName = "InformeMedicamentos.csv";
+
+    // Crear y abrir el archivo CSV
+    StreamWriter^ writer = gcnew StreamWriter(fileName);
+
+    // Escribir la primera línea con los encabezados
+    writer->WriteLine("Nombre,Numero de Registro,Categoria,Principios Activos,Dosis Recomendada");
+
+    // Iterar sobre los medicamentos ordenados y escribir cada uno en una línea
+    for each (Medicamento<String^> ^ med in medicamentosOrdenados) {
+        String^ principios = String::Join(", ", med->PrincipiosA);
+        writer->WriteLine(med->Nombre + "," + med->NumRegistro + "," + med->Categoria + "," + principios + "," + med->Dosis);
+
+    }
+
+    // Cerrar el archivo
+    writer->Close();
+
+    // Mostrar un mensaje indicando que el informe ha sido exportado
+    Console::WriteLine(String::Format("Informe exportado a {0}", fileName));
+
+}
+
+
 int main(array<System::String ^> ^args)
 {
 
@@ -439,15 +570,17 @@ int main(array<System::String ^> ^args)
         switch (opcion)
         {
         case 1:
-            IngresarMed(listaMedicamentos, inventario,proveedorList);
+            do {
+                IngresarMed(listaMedicamentos, inventario, proveedorList);
 
-            // Preguntar al usuario si desea ingresar un nuevo medicamento o regresar al menú
-            Console::Write("¿Desea ingresar un nuevo medicamento? (S/N): ");
-            respuesta = Console::ReadLine();
+                // Preguntar al usuario si desea ingresar un nuevo medicamento o regresar al menú
+                Console::Write("¿Desea ingresar un nuevo medicamento? (S/N): ");
+                respuesta = Console::ReadLine();
 
-            if (respuesta != nullptr && respuesta->Equals("N", StringComparison::CurrentCultureIgnoreCase)) {
-                salir = true; // Si el usuario no desea ingresar más medicamentos, salir del bucle.
-            }
+                if (respuesta != nullptr && respuesta->Equals("N", StringComparison::CurrentCultureIgnoreCase)) {
+                    break; // Si el usuario no desea ingresar más medicamentos, salir del bucle.
+                }
+            } while (true);
             break;
 
         case 2:
@@ -459,6 +592,7 @@ int main(array<System::String ^> ^args)
             break;
 
         case 4:
+            GenerarInformeMedicamentos(listaMedicamentos);
             break;
 
         case 5:
@@ -471,7 +605,11 @@ int main(array<System::String ^> ^args)
 
         case 7:
             ConsultarMedicamentoMasCaroDeProveedor(listaMedicamentos, inventario, proveedorList);
+            break;
 
+        case 9:
+            salir = true;
+            break;
         }
     }
         while (!salir);
