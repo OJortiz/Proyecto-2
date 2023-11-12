@@ -144,6 +144,7 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
     } while (confirmar == true);
 
     Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
+    Node<Inventario<String^>^>^ inventarioMed = inventario->GetFirstNode();
     Medicamento<String^>^ medicamento = nullptr;
 
     while (current != nullptr)
@@ -169,12 +170,15 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         }
         Console::WriteLine("Dosis: " + medicamento->Dosis);
 
+        Console::WriteLine("Cantidad en Inventario: " + inventarioMed->value->CantidadStock);
+
         // Mostrar las opciones de actualización
         Console::WriteLine("Seleccione qué desea actualizar:");
         Console::WriteLine("1. Número de Registro");
         Console::WriteLine("2. Categoría");
         Console::WriteLine("3. Principios Activos");
         Console::WriteLine("4. Dosis");
+        Console::WriteLine("5. Disponibilidad en el inventario");
 
         // Leer la opción del usuario
         Console::Write("Ingrese el número de la opción: ");
@@ -230,6 +234,23 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
             Console::Write("Nueva Dosis: ");
             String^ nuevaDosis = Console::ReadLine();
             medicamento->Dosis = nuevaDosis;
+            break;
+        }
+        case 5: {
+            // Actualizar el stock del inventario
+            Console::Write("Nuevo Stock del Inventario: ");
+            int nuevoStock;
+            bool confirm = false;
+            do {
+                try {
+                    nuevoStock = Convert::ToInt32(Console::ReadLine());
+                    confirm = true;
+                }
+                catch (Exception^ ex) {
+                    Console::Write("Un valor ingresado es inválido, ingrese nuevamente ");
+                }
+            } while (!confirm);
+            inventarioMed->value->CantidadStock = nuevoStock; 
             break;
         }
         default:
@@ -699,7 +720,7 @@ void BuscarPorFecha(ListaDE<Inventario<String^>^>^ inventario) {
 
 int main(array<System::String ^> ^args)
 {
-
+    Console::WriteLine("Bienvenido al sistema de Gestion de datos Farmacia");
     int opcion;
     bool salir = false;
     String^ respuesta = " ";
@@ -710,6 +731,7 @@ int main(array<System::String ^> ^args)
 
 
     do {
+        Console::WriteLine(" ");
         Console::WriteLine("1. Registro de nuevos medicamentos y su inventario");
         Console::WriteLine("2. Actualización de detalles de los medicamentos y su disponibilidad en el inventario.");
         Console::WriteLine("3. Consulta de información sobre un medicamento específico por el nombre o principio activo.");
@@ -717,7 +739,7 @@ int main(array<System::String ^> ^args)
         Console::WriteLine("5. Calcular el precio promedio de todos los medicamentos disponibles en farmacia.");
         Console::WriteLine("6. Dado el nombre de un medicamento, mostrar sus datos de inventario.");
         Console::WriteLine("7. Dado un proveedor conocer el medicamento con el precio más alto que distribuye a la farmacia.");
-        Console::WriteLine("8. Búsqueda y filtrado de medicamentos por diferentes criterios (por ejemplo, por categoría, por principio activo, por proveedor, por fecha de caducidad).");
+        Console::WriteLine("8. Busqueda y filtrado de medicamentos por diferentes criterios");
         Console::WriteLine("9. Salir ");
 
         if (!Int32::TryParse(Console::ReadLine(), opcion)) {
@@ -800,7 +822,6 @@ int main(array<System::String ^> ^args)
                 Console::WriteLine("Opción no válida.");
                 break;
             }
-
             break;
 
         case 9:

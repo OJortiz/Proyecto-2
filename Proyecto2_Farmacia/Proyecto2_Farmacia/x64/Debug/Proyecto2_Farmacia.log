@@ -7,10 +7,11 @@ C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto
 C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(80,27): warning C4101: 'ex': variable local sin referencia
 C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(99,27): warning C4101: 'ex': variable local sin referencia
 C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(140,27): warning C4101: 'ex': variable local sin referencia
-C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(188,31): warning C4101: 'ex': variable local sin referencia
-C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(205,35): warning C4101: 'ex': variable local sin referencia
-C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(341,39): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
-C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(366,27): warning C4101: 'ex': variable local sin referencia
-C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(440,27): warning C4101: 'ex': variable local sin referencia
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(190,31): warning C4101: 'ex': variable local sin referencia
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(207,35): warning C4101: 'ex': variable local sin referencia
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(247,35): warning C4101: 'ex': variable local sin referencia
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(360,39): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(385,27): warning C4101: 'ex': variable local sin referencia
+C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\Proyecto2_Farmacia\Proyecto2_Farmacia.cpp(459,27): warning C4101: 'ex': variable local sin referencia
   AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
   Proyecto2_Farmacia.vcxproj -> C:\Users\ojort\OneDrive\Documentos\GitHub\Proyecto-2\Proyecto2_Farmacia\x64\Debug\Proyecto2_Farmacia.exe
