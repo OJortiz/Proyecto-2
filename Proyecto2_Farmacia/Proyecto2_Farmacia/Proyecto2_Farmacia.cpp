@@ -7,6 +7,8 @@
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::IO;
+using namespace System::Globalization;
+using namespace System::Diagnostics;
 
 
 void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inventario<String^>^>^ inventario, ListaDE<Proveedor<String^>^>^ proveedorList) {
@@ -57,7 +59,7 @@ void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inve
     Medicamento<String^>^ nuevoMedicamento = gcnew Medicamento<String^>(nombre, numRegistro, categoria, principiosActivos, dosisRecomendada);
     listaMedicamentos->Add(nuevoMedicamento);
     int cantidadStock;
-    int fechaCaducidad;
+    DateTime fechaCaducidad;
     double precioCompra;
     double precioVenta;
     do {
@@ -68,7 +70,7 @@ void IngresarMed(ListaDE<Medicamento<String^>^>^ listaMedicamentos, ListaDE<Inve
     Console::Write("Cantidad en Stock: ");
     cantidadStock = Convert::ToInt32(Console::ReadLine());
     Console::Write("Fecha de Caducidad (yyyy-MM-dd): ");
-    fechaCaducidad = Convert::ToInt32(Console::ReadLine());
+    fechaCaducidad = DateTime::Parse(Console::ReadLine());
     Console::Write("Precio de Compra: ");
     precioCompra = Convert::ToDouble(Console::ReadLine());
     Console::Write("Precio de Venta: ");
@@ -160,33 +162,168 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
         Console::WriteLine("Detalles actuales del medicamento:");
         Console::WriteLine("Nombre: " + medicamento->Nombre);
         Console::WriteLine("Número de Registro: " + medicamento->NumRegistro);
+        Console::WriteLine("Categoria: " + medicamento->Categoria);
+        Console::WriteLine("Principios Activos:");
+        for each (String ^ principioActivo in medicamento->PrincipiosA) {
+            Console::WriteLine("   - " + principioActivo);
+        }
+        Console::WriteLine("Dosis: " + medicamento->Dosis);
 
-        // Solicitar al usuario que ingrese los nuevos detalles
-        Console::WriteLine("Ingrese los nuevos detalles del medicamento:");
-        Console::Write("Número de Registro: ");
-        int nuevoNumRegistro;
-        bool confirm = false;
+        // Mostrar las opciones de actualización
+        Console::WriteLine("Seleccione qué desea actualizar:");
+        Console::WriteLine("1. Número de Registro");
+        Console::WriteLine("2. Categoría");
+        Console::WriteLine("3. Principios Activos");
+        Console::WriteLine("4. Dosis");
+
+        // Leer la opción del usuario
+        Console::Write("Ingrese el número de la opción: ");
+        int opcion;
+        bool confirmarOpcion = false;
         do {
-            try
-            {
-                nuevoNumRegistro = Convert::ToInt32(Console::ReadLine());
-                confirm = true;
+            try {
+                opcion = Convert::ToInt32(Console::ReadLine());
+                confirmarOpcion = true;
             }
-            catch (Exception^ ex)
-            {
-                Console::Write("Un valor ingresado es invalido, ingrese nuevamente ");
+            catch (Exception^ ex) {
+                Console::Write("Opción inválida, ingrese nuevamente: ");
             }
-        } while (confirm == false);
-        // Actualizar los detalles del medicamento
-        medicamento->NumRegistro = nuevoNumRegistro;
+        } while (!confirmarOpcion);
+
+        // Realizar la actualización según la opción seleccionada
+        switch (opcion) {
+        case 1: {
+            // Actualizar el número de registro
+            Console::Write("Nuevo Número de Registro: ");
+            int nuevoNumRegistro;
+            bool confirm = false;
+            do {
+                try {
+                    nuevoNumRegistro = Convert::ToInt32(Console::ReadLine());
+                    confirm = true;
+                }
+                catch (Exception^ ex) {
+                    Console::Write("Un valor ingresado es inválido, ingrese nuevamente ");
+                }
+            } while (!confirm);
+            medicamento->NumRegistro = nuevoNumRegistro;
+            break;
+        }
+        case 2: {
+            // Actualizar la categoría
+            Console::Write("Nueva Categoría: ");
+            String^ nuevaCategoria = Console::ReadLine();
+            medicamento->Categoria = nuevaCategoria;
+            break;
+        }
+        case 3: {
+            // Actualizar los principios activos
+            Console::Write("Nuevos Principios Activos (separados por comas): ");
+            String^ nuevosPrincipiosInput = Console::ReadLine();
+            array<String^>^ nuevosPrincipios = nuevosPrincipiosInput->Split(',');
+            medicamento->PrincipiosA->Clear();
+            medicamento->PrincipiosA->AddRange(nuevosPrincipios);
+            break;
+        }
+        case 4: {
+            // Actualizar la dosis
+            Console::Write("Nueva Dosis: ");
+            String^ nuevaDosis = Console::ReadLine();
+            medicamento->Dosis = nuevaDosis;
+            break;
+        }
+        default:
+            Console::WriteLine("Opción no válida.");
+            break;
+        }
 
         // Mostrar mensaje de actualización exitosa
         Console::WriteLine("El medicamento se ha actualizado exitosamente.");
+
     }
     else
     {
         Console::WriteLine("El medicamento no se encontró en la lista.");
     }
+}
+
+ref class MedicamentoComparer : public System::Collections::Generic::IComparer<Medicamento<String^>^>
+{
+public:
+    virtual int Compare(Medicamento<String^>^ med1, Medicamento<String^>^ med2)
+    {
+        return med1->Nombre->CompareTo(med2->Nombre);
+    }
+};
+
+void GenerarInformeMedicamentos(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
+{
+    // Crear una lista ordenada de medicamentos por nombre
+    List<Medicamento<String^>^>^ medicamentosOrdenados = gcnew List<Medicamento<String^>^>();
+    Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
+
+    while (current != nullptr) {
+        medicamentosOrdenados->Add(current->value);
+        current = current->next;
+    }
+
+    MedicamentoComparer^ comparer = gcnew MedicamentoComparer();
+    medicamentosOrdenados->Sort(comparer);
+
+    // Mostrar el informe por consola
+    Console::WriteLine("Informe de Medicamentos:");
+    for each (Medicamento<String^> ^ med in medicamentosOrdenados) {
+        Console::WriteLine("Nombre: " + med->Nombre);
+        Console::WriteLine("Número de Registro: " + med->NumRegistro);
+        Console::WriteLine("Categoría: " + med->Categoria);
+        Console::WriteLine("Principios Activos:");
+        for each (String ^ principioActivo in med->PrincipiosA) {
+            Console::WriteLine("   - " + principioActivo);
+        }
+        Console::WriteLine("Dosis Recomendada: " + med->Dosis);
+        Console::WriteLine();
+    }
+
+    // Nombre del archivo CSV
+    String^ fileName = "InformeMedicamentos.csv";
+
+    // Crear y abrir el archivo CSV
+    StreamWriter^ writer = gcnew StreamWriter(fileName);
+
+    // Escribir la primera línea con los encabezados
+    writer->WriteLine("Nombre,Numero de Registro,Categoria,Principios Activos,Dosis Recomendada");
+
+    // Iterar sobre los medicamentos ordenados y escribir cada uno en una línea
+    for each (Medicamento<String^> ^ med in medicamentosOrdenados) {
+        String^ principios = String::Join(", ", med->PrincipiosA);
+        writer->WriteLine(med->Nombre + "," + med->NumRegistro + "," + med->Categoria + "," + principios + "," + med->Dosis);
+
+    }
+
+    // Cerrar el archivo
+    writer->Close();
+
+    // Mostrar un mensaje indicando que el informe ha sido exportado
+    Console::WriteLine(String::Format("Informe exportado a {0}", fileName));
+    Console::WriteLine("Desea abrir el archivo? 1 = Si, 2 = No");
+    int eleccion = Convert::ToInt32(Console::ReadLine());
+    if (eleccion == 1) {
+        try
+        {
+            Process^ proceso = gcnew Process();
+            proceso->StartInfo->FileName = "notepad.exe"; // Establece el programa a utilizar (Bloc de notas en este caso)
+            proceso->StartInfo->Arguments = fileName;     // Establece el archivo a abrir
+            proceso->Start();
+        }
+        catch (Exception^ e)
+        {
+            Console::WriteLine("Error al abrir el archivo: " + e->Message);
+        }
+
+        Console::ReadLine(); // Espera a que el usuario presione Enter
+    }
+
+
 }
 
 void PromedioDePreciosDeVenta(ListaDE<Inventario<String^>^>^ inventario) {
@@ -476,66 +613,88 @@ void BuscarMedicamentoPorPrincipioActivo(ListaDE<Medicamento<String^>^>^ listaMe
     }
 }
 
-ref class MedicamentoComparer : public System::Collections::Generic::IComparer<Medicamento<String^>^>
+void BuscarPorProveedor(ListaDE<Inventario<String^>^>^ inventario)
 {
-public:
-    virtual int Compare(Medicamento<String^>^ med1, Medicamento<String^>^ med2)
+    Console::Write("Ingrese el nombre del proveedor que desea buscar: ");
+    String^ consulta = Console::ReadLine();
+
+    List<Inventario<String^>^>^ inventarioLista = gcnew List<Inventario<String^>^>();
+    Node<Inventario<String^>^>^ current = inventario->GetFirstNode();
+
+    while (current != nullptr)
     {
-        return med1->Nombre->CompareTo(med2->Nombre);
-    }
-};
-
-void GenerarInformeMedicamentos(ListaDE<Medicamento<String^>^>^ listaMedicamentos)
-{
-    // Crear una lista ordenada de medicamentos por nombre
-    List<Medicamento<String^>^>^ medicamentosOrdenados = gcnew List<Medicamento<String^>^>();
-    Node<Medicamento<String^>^>^ current = listaMedicamentos->GetFirstNode();
-
-    while (current != nullptr) {
-        medicamentosOrdenados->Add(current->value);
+        inventarioLista->Add(current->value);
         current = current->next;
     }
 
-    MedicamentoComparer^ comparer = gcnew MedicamentoComparer();
-    medicamentosOrdenados->Sort(comparer);
-
-    // Mostrar el informe por consola
-    Console::WriteLine("Informe de Medicamentos:");
-    for each (Medicamento<String^> ^ med in medicamentosOrdenados) {
-        Console::WriteLine("Nombre: " + med->Nombre);
-        Console::WriteLine("Número de Registro: " + med->NumRegistro);
-        Console::WriteLine("Categoría: " + med->Categoria);
-        Console::WriteLine("Principios Activos:");
-        for each (String ^ principioActivo in med->PrincipiosA) {
-            Console::WriteLine("   - " + principioActivo);
+    if (inventarioLista->Count > 0)
+    {
+        Console::WriteLine("Medicamentos por Proveedor encontrados:");
+        for each (Inventario<String^> ^ inventarioMed in inventarioLista)
+        {
+            if (inventarioMed->ProveedorAsociado->Nombre->Equals(consulta, StringComparison::CurrentCultureIgnoreCase))
+            {
+                Console::WriteLine("Nombre del Proveedor: " + inventarioMed->ProveedorAsociado->Nombre);
+                Console::WriteLine("Cantidad en Stock: " + inventarioMed->CantidadStock);
+                Console::WriteLine("Fecha de Caducidad: " + inventarioMed->FechaCaducidad.ToString("yyyy-MM-dd"));
+                Console::WriteLine("Precio de Compra: " + inventarioMed->PrecioCompra);
+                Console::WriteLine("Precio de Venta: " + inventarioMed->PrecioVenta);
+                Console::WriteLine();
+            }
         }
-        Console::WriteLine("Dosis Recomendada: " + med->Dosis);
-        Console::WriteLine();
     }
-
-    // Nombre del archivo CSV
-    String^ fileName = "InformeMedicamentos.csv";
-
-    // Crear y abrir el archivo CSV
-    StreamWriter^ writer = gcnew StreamWriter(fileName);
-
-    // Escribir la primera línea con los encabezados
-    writer->WriteLine("Nombre,Numero de Registro,Categoria,Principios Activos,Dosis Recomendada");
-
-    // Iterar sobre los medicamentos ordenados y escribir cada uno en una línea
-    for each (Medicamento<String^> ^ med in medicamentosOrdenados) {
-        String^ principios = String::Join(", ", med->PrincipiosA);
-        writer->WriteLine(med->Nombre + "," + med->NumRegistro + "," + med->Categoria + "," + principios + "," + med->Dosis);
-
+    else
+    {
+        Console::WriteLine("No se encontraron medicamentos asociados al proveedor que coincidan con la consulta.");
     }
-
-    // Cerrar el archivo
-    writer->Close();
-
-    // Mostrar un mensaje indicando que el informe ha sido exportado
-    Console::WriteLine(String::Format("Informe exportado a {0}", fileName));
-
 }
+
+void BuscarPorFecha(ListaDE<Inventario<String^>^>^ inventario) {
+    Console::Write("Ingrese la fecha de caducidad (yyyy-MM-dd): ");
+    String^ consulta = Console::ReadLine();
+
+    if (DateTime::TryParseExact(consulta, "yyyy-MM-dd", CultureInfo::InvariantCulture, DateTimeStyles::None, DateTime()))
+
+    {
+        DateTime fechaCaducidad = DateTime::ParseExact(consulta, "yyyy-MM-dd", CultureInfo::InvariantCulture);
+
+        List<Inventario<String^>^>^ inventarioLista = gcnew List<Inventario<String^>^>();
+        Node<Inventario<String^>^>^ current = inventario->GetFirstNode();
+
+        while (current != nullptr)
+        {
+            inventarioLista->Add(current->value);
+            current = current->next;
+        }
+
+        if (inventarioLista->Count > 0)
+        {
+            Console::WriteLine("Medicamentos por Fecha encontrados:");
+            for each (Inventario<String^> ^ inventarioMed in inventarioLista)
+            {
+                // Comparar la fecha de caducidad
+                if (DateTime::Compare(inventarioMed->FechaCaducidad, fechaCaducidad) == 0)
+                {
+                    Console::WriteLine("Nombre del Proveedor: " + inventarioMed->ProveedorAsociado->Nombre);
+                    Console::WriteLine("Cantidad en Stock: " + inventarioMed->CantidadStock);
+                    Console::WriteLine("Fecha de Caducidad: " + inventarioMed->FechaCaducidad.ToString("yyyy-MM-dd"));
+                    Console::WriteLine("Precio de Compra: " + inventarioMed->PrecioCompra);
+                    Console::WriteLine("Precio de Venta: " + inventarioMed->PrecioVenta);
+                    Console::WriteLine();
+                }
+            }
+        }
+        else
+        {
+            Console::WriteLine("No se encontraron medicamentos asociados a la fecha que coincidan con la consulta.");
+        }
+    }
+    else
+    {
+        Console::WriteLine("Formato de fecha incorrecto. Use el formato yyyy-MM-dd.");
+    }
+}
+
 
 
 int main(array<System::String ^> ^args)
@@ -606,7 +765,46 @@ int main(array<System::String ^> ^args)
             ConsultarMedicamentoMasCaroDeProveedor(listaMedicamentos, inventario, proveedorList);
             break;
 
+        case 8:
+            Console::WriteLine("Selecciona el criterio de búsqueda:");
+            Console::WriteLine("1. Por categoría");
+            Console::WriteLine("2. Por principio activo");
+            Console::WriteLine("3. Por proveedor");
+            Console::WriteLine("4. Por fecha de caducidad");
+
+            int criterio;
+            if (!Int32::TryParse(Console::ReadLine(), criterio)) {
+                Console::WriteLine("Error: Ingresa un número válido.");
+                break;
+            }
+
+            switch (criterio)
+            {
+            case 1:
+                BuscarMedicamentoPorCategoria(listaMedicamentos);
+                break;
+
+            case 2:
+                BuscarMedicamentoPorPrincipioActivo(listaMedicamentos);
+                break;
+
+            case 3:
+                BuscarPorProveedor(inventario);
+                break;
+
+            case 4:
+                BuscarPorFecha(inventario);
+                break;
+
+            default:
+                Console::WriteLine("Opción no válida.");
+                break;
+            }
+
+            break;
+
         case 9:
+            Console::WriteLine("Ha salido del sistema de Datos de la Farmacia");
             salir = true;
             break;
         }

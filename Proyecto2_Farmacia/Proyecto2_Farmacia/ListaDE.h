@@ -1,6 +1,7 @@
 #pragma once
 #include "Node.h"
 #include "Medicamento.h"
+#include "Proveedor.h"
 
 using namespace System::Collections;
 using namespace System::Collections::Generic;
