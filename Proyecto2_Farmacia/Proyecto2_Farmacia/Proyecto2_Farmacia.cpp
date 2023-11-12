@@ -270,7 +270,7 @@ void ActualizarMedicamento(ListaDE<Medicamento<String^>^>^ listaMedicamentos, Li
 
 ref class MedicamentoComparer : public System::Collections::Generic::IComparer<Medicamento<String^>^>
 {
-public:
+public://Clase para comparar datos para el punto 4
     virtual int Compare(Medicamento<String^>^ med1, Medicamento<String^>^ med2)
     {
         return med1->Nombre->CompareTo(med2->Nombre);
